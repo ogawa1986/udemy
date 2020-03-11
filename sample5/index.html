@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>TIMER</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <p id="timer">00:00:00</p>
+
+        <div>
+            <button id="start_stop" class="btn btn-lg btn-primary">START</button>
+        </div>
+    </div>
+
+    <script>
+        var addZero = function (value) {
+            if (value < 10) {
+                value = '0' + value;
+            }
+            return value;
+        }
+        var start;
+        var timer_id;
+        document.getElementById('start_stop').addEventListener('click',
+            function () {
+                if (this.innerHTML === 'START') {
+                    start = new Date();
+                    timer_id = setInterval(goTimer, 10);
+
+                    this.innerHTML = 'STOP';
+                    this.classList.remove('btn-primary');
+                    this.classList.add('btn-danger');
+                } else {
+                    clearInterval(timer_id);
+                    this.innerHTML = 'START';
+                    this.classList.remove('btn-danger');
+                    this.classList.add('btn-primary');
+                }
+            });
+        var goTimer = function () {
+            var now = new Date();
+
+            var milli = now.getTime() - start.getTime();
+            var seconds = addZero(Math.floor(milli / 1000));
+            var minutes = addZero(Math.floor(seconds / 60));
+            var hours = addZero(Math.floor(minutes / 60));
+            document.getElementById('timer').innerHTML = `${hours}:${minutes}:${seconds}`;
+        }
+    </script>
+
+</body>
+
+</html>
